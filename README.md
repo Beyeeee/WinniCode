@@ -25,8 +25,11 @@ pada bagian navbar terdapat navigate about us, contact, service yang dimana bisa
 
 pada bagian admin terdapat bagian home admin yang dimana kegunaannya adalah untuk menampilkan berapa jumlah berita, kategori, dan iklan yang sudah ada. untuk page berita, kategori, dan iklan adalah CRUD yang dapat diatur oleh admin.
 
+untuk bagian MO adalah untuk mengurus pegawai dan role.
+
 pada bagian pembaca terdapat beberapa hal yang dapat dilakukan seperti profile yang dimana dapat mengubah photo profile, dan bisa menambahkan favorit untuk berita yang mereka suka, serta dapat melakukan komentar.
 
+untuk password dari data yang sudah ada itu passwordnya adalah 123456
 
 
 
