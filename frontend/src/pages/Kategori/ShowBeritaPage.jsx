@@ -26,7 +26,7 @@ const ShowBeritaPage = () => {
   }, [category]);
 
   const handleBackClick = () => {
-    navigate("/kategori"); // Navigasi ke halaman kategori
+    navigate("/h/kategori"); // Navigasi ke halaman kategori
   };
 
   const handleBeritaClick = (id) => {

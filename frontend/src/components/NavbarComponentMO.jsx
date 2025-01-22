@@ -8,7 +8,7 @@ import {
 
 import winniCode from "../assets/img/TulisanWinniCode.png"
 
-const NavbarComponentAdmin = () => {
+const NavbarComponentMO = () => {
     return (
         <>
             <div>
@@ -18,11 +18,9 @@ const NavbarComponentAdmin = () => {
                     </div>
                     <div className="flex w-[60%] pt-3 justify-center text-center">
                         <Nav className="flex flex-col font-bold pt-2">
-                            <NavLink className="nav-link text-black" to="/admin">Home</NavLink>
-                            <NavLink className="nav-link text-black" to="/admin/berita">Berita</NavLink>
-                            <NavLink className="nav-link text-black" to="/admin/kategori">Kategori</NavLink>
-                            <NavLink className="nav-link text-black" to="/admin/iklan">Iklan</NavLink>
-                            <NavLink className="nav-link text-black" to="/admin/pegawai">Pegawai</NavLink>
+                            <NavLink className="nav-link text-black" to="/mo">Home</NavLink>
+                            <NavLink className="nav-link text-black" to="/mo/pegawai">Pegawai</NavLink>
+                            <NavLink className="nav-link text-black" to="/mo/role">Role</NavLink>
                         </Nav>
                     </div>
                     <div className="flex w-[20%] pt-2 justify-center">
@@ -53,4 +51,4 @@ const NavbarComponentAdmin = () => {
 
 };
 
-export default NavbarComponentAdmin;
+export default NavbarComponentMO;

@@ -40,3 +40,17 @@ export const RegisterUser = async (data) => {
     return error;
   }
 };
+
+export const RegisterPegawai = async (data) => {
+  try {
+    const response = await urlAxios.post("/registerPegawai", data, {
+      headers: {
+        "Content-Type": "multipart/form-data", // untuk upload thumbnail
+        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};

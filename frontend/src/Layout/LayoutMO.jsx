@@ -1,11 +1,11 @@
 import { Outlet } from "react-router-dom";
 // import component
-import NavBarComponentMO from "../components/NavBarComponentMO";
+import NavBarComponent from "../components/NavbarComponentMO";
 
 const LayoutMO = ({ children }) => {
   return (
     <div className="">
-      <NavBarComponentMO />
+      <NavBarComponent />
       {children ? children : <Outlet />}
     </div>
   );

@@ -43,6 +43,8 @@ const LoginPage = () => {
           navigate("/admin");
         } else if (id_role === 2) {
           navigate("/pembaca/home");
+        } else if (id_role === 3){
+          navigate("/mo")
         } else {
           navigate("/default-page");
         }

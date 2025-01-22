@@ -93,7 +93,7 @@ class AuthController extends Controller
             'id_role' => 'required',
             'nama_lengkap' => 'required|max:60',
             'email' => 'required|email:rfc,dns',
-            'username' => 'required|min:4|unique:users,username',
+            'username' => 'required|unique:users,username',
             'password' => 'required|min:6',
             'tanggal_lahir' => 'required|date|before:today',
             'no_telp' => 'required|max:12',

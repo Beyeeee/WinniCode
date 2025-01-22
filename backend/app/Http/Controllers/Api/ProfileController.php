@@ -32,9 +32,8 @@ class ProfileController extends Controller
         $idUser = Auth::user()->id_user;
         $user = User::where('id_user', $idUser)->first();
 
-        // Validasi input gambar
         $validate = Validator::make($request->all(), [
-            'image_user' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Validasi untuk tipe gambar dan ukuran maksimal
+            'image_user' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048', 
         ]);
 
         if ($validate->fails()) {

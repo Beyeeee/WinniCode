@@ -27,6 +27,36 @@ class BeritaController extends Controller
         ], 200);
     }
 
+    public function search(Request $request)
+    {
+        $keyword = $request->input('keyword');
+
+        if (empty($keyword)) {
+            return response([
+                'message' => 'Keyword is required for search',
+                'data' => []
+            ], 400);
+        }
+
+        $berita = Berita::where('judul_berita', 'like', '%' . $keyword . '%')
+            ->orWhereHas('kategori', function ($query) use ($keyword) {
+                $query->where('nama_kategori', 'like', '%' . $keyword . '%');
+            })
+            ->get();
+
+        if ($berita->isEmpty()) {
+            return response([
+                'message' => 'No matching news found',
+                'data' => []
+            ], 404);
+        }
+
+        return response([
+            'message' => 'Search results retrieved successfully',
+            'data' => $berita
+        ], 200);
+    }
+
     public function store(Request $request)
     {
         $storeData = $request->all();

@@ -57,7 +57,6 @@ class FavoritController extends Controller
 
         $idBerita = $request->input('id_berita');
 
-        // Validasi input
         $request->validate([
             'id_berita' => 'required|exists:berita,id_berita',
         ]);

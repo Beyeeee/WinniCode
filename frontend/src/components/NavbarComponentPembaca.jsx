@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import { search } from "../api/Pembaca/BeritaApi";
 
 const NavBarComponentPembaca = () => {
-  const [changeColor, setChangeColor] = useState(false); // State untuk background navbar
-  const [sidebarShow, setSidebarShow] = useState(false); // State untuk sidebar
+  const [changeColor, setChangeColor] = useState(false);
+  const [sidebarShow, setSidebarShow] = useState(false); 
+  const [keyword, setKeyword] = useState("");
   const navigate = useNavigate();
 
-  // Mengatur background navbar saat scroll
   const changeBackgroundColor = () => {
     if (window.scrollY > 10) {
       setChangeColor(true);
@@ -23,6 +24,19 @@ const NavBarComponentPembaca = () => {
 
   const toggleSidebar = () => setSidebarShow(!sidebarShow);
 
+  const handleSearch = async (e) => {
+    e.preventDefault(); 
+    try {
+      const response = await search(keyword); 
+      navigate("/search", {
+        state: { results: response.data, keyword }, 
+      });
+    } catch (error) {
+      console.error("Search failed:", error.message);
+      alert("Pencarian gagal. Silakan coba lagi.");
+    }
+  };
+
   return (
     <div>
       {/* Navbar */}
@@ -33,7 +47,6 @@ const NavBarComponentPembaca = () => {
         style={{ height: "60px" }}
       >
         <div className="flex justify-between items-center px-4 h-full">
-          {/* Hamburger Icon */}
           <button
             onClick={toggleSidebar}
             className="flex flex-col justify-center items-center space-y-1 focus:outline-none"
@@ -43,23 +56,27 @@ const NavBarComponentPembaca = () => {
             <span className="block w-6 h-0.5 bg-black"></span>
           </button>
 
-          {/* Search bar */}
-          <form className="flex items-center mx-auto w-full max-w-lg">
+          <form
+            className="flex items-center mx-auto w-full max-w-lg"
+            onSubmit={handleSearch}
+          >
             <div className="relative w-full">
               <input
                 type="search"
-                placeholder="Search"
+                value={keyword}
+                onChange={(e) => setKeyword(e.target.value)}
+                placeholder="Cari berita..."
                 className="w-full px-4 py-2 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
               <button
                 type="submit"
                 className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 focus:outline-none"
               >
+                🔍
               </button>
             </div>
           </form>
 
-          {/* Text Links */}
           <div className="hidden lg:flex space-x-4">
             <a href="#" className="text-black font-bold">
               ABOUT US
@@ -74,13 +91,11 @@ const NavBarComponentPembaca = () => {
         </div>
       </nav>
 
-      {/* Sidebar (Offcanvas) */}
       <div
         className={`fixed top-0 left-0 h-full w-64 bg-white shadow-lg transform ${
           sidebarShow ? "translate-x-0" : "-translate-x-full"
         } transition-transform duration-300 z-50`}
       >
-        {/* Header Sidebar */}
         <div className="flex items-center justify-between px-4 py-3 border-b border-gray-300">
           <h2 className="font-bold text-lg">Menu</h2>
           <button
@@ -91,7 +106,6 @@ const NavBarComponentPembaca = () => {
           </button>
         </div>
 
-        {/* Body Sidebar */}
         <div className="flex flex-col p-4 space-y-4">
           <NavLink
             to="/pembaca/home"
@@ -100,7 +114,7 @@ const NavBarComponentPembaca = () => {
             HOME
           </NavLink>
           <NavLink
-            to="/kategori"
+            to="/h/kategori"
             className="text-gray-800 hover:text-blue-500 hover:underline"
           >
             KATEGORI
@@ -120,7 +134,6 @@ const NavBarComponentPembaca = () => {
         </div>
       </div>
 
-      {/* Overlay untuk menutup sidebar */}
       {sidebarShow && (
         <div
           onClick={toggleSidebar}
@@ -128,7 +141,6 @@ const NavBarComponentPembaca = () => {
         ></div>
       )}
 
-      {/* Padding untuk mencegah konten overlap */}
       <div style={{ paddingTop: "60px" }}>{/* Konten tambahan di sini */}</div>
     </div>
   );

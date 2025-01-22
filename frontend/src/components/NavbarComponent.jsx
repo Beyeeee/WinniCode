@@ -2,17 +2,18 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import { Nav } from "react-bootstrap";
+import { search } from "../api/Pembaca/BeritaApi";
 import tulisanWinniCode from "../assets/img/TulisanWinnicode.png";
 
 const NavBarComponent = () => {
   const [changeColor, setChangeColor] = useState(false);
-  const navigate = useNavigate(); 
+  const [keyword, setKeyword] = useState(""); 
+  const navigate = useNavigate();
 
- 
   const handleLogoClick = () => {
     const token = sessionStorage.getItem("token");
     if (token) {
-      navigate("/pembaca/home"); 
+      navigate("/pembaca/home");
     } else {
       navigate("/");
     }
@@ -32,6 +33,18 @@ const NavBarComponent = () => {
     return () => window.removeEventListener("scroll", changeBackgroundColor);
   }, []);
 
+  const handleSearch = async (e) => {
+    e.preventDefault();
+    if (!keyword.trim()) return;
+    try {
+      const response = await search(keyword); 
+      navigate("/search", { state: { results: response.data, keyword } }); 
+    } catch (error) {
+      console.error("Search failed:", error.message);
+      alert("Pencarian gagal. Silakan coba lagi.");
+    }
+  };
+
   return (
     <div>
       <nav
@@ -47,15 +60,17 @@ const NavBarComponent = () => {
               src={tulisanWinniCode}
               alt="WinniCode"
               className="h-8 cursor-pointer"
-              onClick={handleLogoClick} // Panggil fungsi handleLogoClick
+              onClick={handleLogoClick}
             />
           </div>
 
           {/* Search bar */}
-          <form className="flex items-center mx-auto w-full max-w-lg">
+          <form className="flex items-center mx-auto w-full max-w-lg" onSubmit={handleSearch}>
             <div className="relative w-full">
               <input
                 type="search"
+                value={keyword}
+                onChange={(e) => setKeyword(e.target.value)}
                 placeholder="Search"
                 className="w-full px-4 py-2 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
               />
@@ -63,6 +78,7 @@ const NavBarComponent = () => {
                 type="submit"
                 className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 focus:outline-none"
               >
+                🔍
               </button>
             </div>
           </form>
@@ -70,7 +86,7 @@ const NavBarComponent = () => {
           {/* Text Links */}
           <div className="hidden lg:flex space-x-4">
             <Nav>
-              <NavLink className="nav-link font-bold text-black" to="/kategori">
+              <NavLink className="nav-link font-bold text-black" to="/h/kategori">
                 KATEGORI
               </NavLink>
               <NavLink className="nav-link font-bold text-black" to="/pembaca/profile">
